@@ -1,0 +1,10 @@
+const $=s=>document.querySelector(s);
+const stories=[['Your story','+'],['alex','A'],['mia','M'],['travel.diary','T'],['designhub','D'],['sam','S']];
+$('#stories').innerHTML=stories.map(([n,c])=>'<div class="story"><div class="story-pic"><span>'+c+'</span></div>'+n+'</div>').join('');
+const posts=[['alex','Downtown moments ✨','one','A quiet afternoon in the city.'],['mia','Weekend escape 🌿','two','A little break from the usual.'],['travel.diary','Somewhere beautiful','three','Collecting memories, one place at a time.']];
+$('#feed').innerHTML=posts.map(([u,loc,cl,cap])=>'<article class="post"><div class="post-top"><div class="mini-avatar">'+u[0].toUpperCase()+'</div><div><b>'+u+'</b><small>'+loc+'</small></div><span class="more">···</span></div><div class="post-image '+cl+'">✦</div><div class="post-actions"><button class="like">♡</button><button class="comment">♧</button><button>➤</button><button class="save">♧</button></div><div class="post-caption"><b>'+u+'</b>'+cap+'</div></article>').join('');
+$('#listing').classList.add('show');
+$('#openApp').onclick=()=>{$('#store').classList.add('hidden');$('#social').classList.remove('hidden');document.title='Instagram';window.scrollTo(0,0)};
+document.addEventListener('click',e=>{if(e.target.matches('.like')){e.target.textContent=e.target.textContent==='♡'?'♥':'♡';e.target.style.color=e.target.textContent==='♥'?'#e1306c':''}if(e.target.matches('.save')){e.target.textContent=e.target.textContent==='♧'?'▣':'♧';toast('Saved to collection')}if(e.target.matches('.comment'))toast('Comments preview is not connected yet');if(e.target.closest('#newPost'))toast('Post composer will be added in the next build');if(e.target.matches('[data-tab]')&&e.target.dataset.tab!=='home')toast(e.target.dataset.tab+' preview is coming next')});
+function toast(t){const x=$('#toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1800)}
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
